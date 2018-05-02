@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simon</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div id="0" class="btn"></div>
+      <div id="1" class="btn"></div>
+    </div>
+    <div class="row">
+      <div id="2" class="btn"></div>
+      <div id="3" class="btn"></div>
+    </div>
+
+    <div class="pane">
+      <p>Score<span id="score">00</span></p>
+      <div class="controls">
+        <button id="new-game-btn">New Game</button><br/>
+        <label for="volume">Volume:</label><br/>
+        <input type="range" min="0" max="0.5" step="0.05" value="0.2" id="volume">
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/index.js"></script>
+</body>
+</html>

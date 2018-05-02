@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font: 15px sans-serif;
+}
+.container {
+  margin: 2px;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6vw;
+}
+.btn {
+  width: 47vw;
+  height: 47vw;
+  border-radius: 15px;
+  margin-bottom: 12px; /* To compasate box shadow */
+  cursor: pointer;
+  -webkit-tap-highlight-color: hsla(0, 0%, 100%, 0);
+}
+.pane {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  background: linear-gradient(45deg, hsl(0, 0%, 60%), hsl(0, 0%, 95%));
+  box-shadow: 0 5px hsl(0, 0%, 60%);
+}
+.pane p {
+  flex-grow: 1;
+  font-size: 28px;
+  color: hsl(0, 100%, 45%);
+}
+#score {
+  font-size: 35px;
+  font-weight: bold;
+  color: hsl(0, 100%, 45%);
+  margin-left: 0.5em;
+}
+.controls {
+  flex-grow: 2;
+}
+input[type=range], button {
+  cursor: pointer;
+  width: 100%;
+}
+button {
+  font-size: 18px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 426px) {
+  .btn {
+    width: 200px;
+    height: 200px;
+  }
+  .container {
+    width: 426px;
+    margin: 20px auto;
+  }
+  .row {
+    margin-bottom: 26px;
+  }
+  button {
+    height: 38px;
+  }
+}
