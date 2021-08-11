@@ -9,7 +9,7 @@
   "author": "Andre Bessa",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.23.6",
-    "gulp": "^3.9.1"
+    "browser-sync": "^2.27.5",
+    "gulp": "^4.0.2"
   }
 }

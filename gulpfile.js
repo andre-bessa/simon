@@ -1,11 +1,14 @@
-const gulp = require('gulp');
+const { watch } = require('gulp');
 const browserSync = require('browser-sync').create();
 
-gulp.task('server', function () {
+function server() {
   browserSync.init({
     server: {
-      baseDir: './'
+      baseDir: 'src'
     }
   });
-  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js']).on('change', browserSync.reload);
-});
+
+  watch('src/**', { events: 'change' }, cb => { browserSync.reload(); cb(); });
+}
+
+exports.server = server;
