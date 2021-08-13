@@ -2,14 +2,30 @@
   "name": "simon",
   "version": "0.1.0",
   "description": "A Simon like game coded in plain JS (ES2015), using the Web Audio API.",
-  "main": "index.js",
+  "targets": {
+    "githubPages": {
+      "source": "./src/index.html",
+      "distDir": "./doc",
+      "sourceMap": false,
+      "isLibrary": false,
+      "context": "browser",
+      "engines": {
+        "browsers": [
+          "> 0.5%",
+          "not dead"
+        ]
+      }
+    }
+  },
   "scripts": {
-    "server": "gulp server"
+    "start": "parcel serve --open",
+    "prebuild": "rimraf ./doc",
+    "build": "parcel build"
   },
   "author": "Andre Bessa",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.27.5",
-    "gulp": "^4.0.2"
+    "parcel": "^2.0.0-rc.0",
+    "rimraf": "^3.0.2"
   }
 }
