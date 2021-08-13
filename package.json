@@ -6,6 +6,7 @@
     "githubPages": {
       "source": "./src/index.html",
       "distDir": "./docs",
+      "publicUrl": "/simon",
       "sourceMap": false,
       "isLibrary": false,
       "context": "browser",
