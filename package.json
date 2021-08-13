@@ -5,7 +5,7 @@
   "targets": {
     "githubPages": {
       "source": "./src/index.html",
-      "distDir": "./doc",
+      "distDir": "./docs",
       "sourceMap": false,
       "isLibrary": false,
       "context": "browser",
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "parcel serve --open",
-    "prebuild": "rimraf ./doc",
+    "prebuild": "rimraf ./docs",
     "build": "parcel build"
   },
   "author": "Andre Bessa",
