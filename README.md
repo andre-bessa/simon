@@ -1,14 +1,9 @@
-# Simon
-A Simon like game coded in plain JS (ES2015), using the Web Audio API.
+# Simon Says Game
 
-## Run
-To test the game, first you'll need to have [nodejs](https://nodejs.org) installed and an up to date browser.
+A "simon says" game coded in modern JavaScript, using the Web Audio API.
 
-Then run:
-```sh
-cd <projectDirectory>
-npm install
-npm run server
-```
-## Screenshot
-![Game Screenshot](screenshots/simon.png)
+[:red_circle: Live demo](https://andre-bessa.github.io/simon/)
+
+## License
+
+* Source code: MIT

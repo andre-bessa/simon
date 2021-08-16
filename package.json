@@ -1,7 +1,9 @@
 {
   "name": "simon",
   "version": "0.1.0",
-  "description": "A Simon like game coded in plain JS (ES2015), using the Web Audio API.",
+  "description": "A \"simon says\" game coded in modern JavaScript, using the Web Audio API.",
+  "author": "Andre Bessa",
+  "license": "MIT",
   "browserslist": [
     "defaults",
     "not ie <= 11"
@@ -35,8 +37,6 @@
     "buildAllTargets": "parcel build",
     "clean": "rimraf ./docs ./dist ./.parcel-cache"
   },
-  "author": "Andre Bessa",
-  "license": "MIT",
   "devDependencies": {
     "parcel": "^2.0.0-rc.0",
     "rimraf": "^3.0.2"
