@@ -2,26 +2,38 @@
   "name": "simon",
   "version": "0.1.0",
   "description": "A Simon like game coded in plain JS (ES2015), using the Web Audio API.",
+  "browserslist": [
+    "defaults",
+    "not ie <= 11"
+  ],
+  "source": "./src/index.html",
+  "development": "./dist/index.html",
+  "githubPages": "./docs/index.html",
   "targets": {
-    "githubPages": {
-      "source": "./src/index.html",
-      "distDir": "./docs",
-      "publicUrl": "/simon",
-      "sourceMap": false,
-      "isLibrary": false,
+    "development": {
+      "publicUrl": "/",
+      "distDir": "./dist",
       "context": "browser",
-      "engines": {
-        "browsers": [
-          "> 0.5%",
-          "not dead"
-        ]
-      }
+      "isLibrary": false,
+      "sourceMap": true,
+      "optimize": false
+    },
+    "githubPages": {
+      "publicUrl": "/simon",
+      "distDir": "./docs",
+      "context": "browser",
+      "isLibrary": false,
+      "sourceMap": false,
+      "optimize": true
     }
   },
   "scripts": {
-    "start": "parcel serve --open",
+    "start": "parcel serve --port 5000 --target development --open",
     "prebuild": "rimraf ./docs",
-    "build": "parcel build"
+    "build": "parcel build --target githubPages",
+    "prebuildAllTargets": "rimraf ./docs ./dist",
+    "buildAllTargets": "parcel build",
+    "clean": "rimraf ./docs ./dist ./.parcel-cache"
   },
   "author": "Andre Bessa",
   "license": "MIT",
