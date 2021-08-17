@@ -1,19 +1,32 @@
+:root {
+  --theme-color: #222222;
+  --background-color: #EEEEEE;
+  --icon-color: #78B159;
+  --icon-background-color: #66659F;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 body {
   font: 15px sans-serif;
+  padding: 3px;
+  background-color: var(--background-color);
 }
+
 .container {
   margin: 2px;
 }
+
 .row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6vw;
 }
+
 .btn {
   width: 47vw;
   height: 47vw;
@@ -22,32 +35,39 @@ body {
   cursor: pointer;
   -webkit-tap-highlight-color: hsla(0, 0%, 100%, 0);
 }
+
 .pane {
   padding: 5px;
   display: flex;
   justify-content: space-between;
   border-radius: 5px;
-  background: linear-gradient(45deg, hsl(0, 0%, 60%), hsl(0, 0%, 95%));
-  box-shadow: 0 5px hsl(0, 0%, 60%);
+  background: linear-gradient(45deg, var(--theme-color), #999999);
+  box-shadow: 0 5px var(--theme-color);
 }
+
 .pane p {
   flex-grow: 1;
   font-size: 28px;
-  color: hsl(0, 100%, 45%);
+  color: var(--icon-color);
 }
+
 #score {
   font-size: 35px;
   font-weight: bold;
-  color: hsl(0, 100%, 45%);
+  color: var(--icon-color);
   margin-left: 0.5em;
 }
+
 .controls {
   flex-grow: 2;
+  color: var(--background-color);
 }
+
 input[type=range], button {
   cursor: pointer;
   width: 100%;
 }
+
 button {
   font-size: 18px;
   height: 50px;
