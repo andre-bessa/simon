@@ -14,8 +14,8 @@ export default class Board {
   }
   playSequence(seq, interval) {
     this._isPlayingAnimation = true;
-    let interavlId = setInterval(() => {
-      if (seq.length == 0) {
+    const interavlId = setInterval(() => {
+      if (seq.length === 0) {
         this._isPlayingAnimation = false;
         clearInterval(interavlId);
       } else {

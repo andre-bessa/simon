@@ -11,13 +11,13 @@ export default class Game {
   getAnswer(btnId) {
     if (!this._isOver && !this._isPlayingAnimation) {
       this._answer.push(btnId);
-      let i = this._answer.length - 1;
-      if (this._answer[i] != this._sequence[i]) {
+      const i = this._answer.length - 1;
+      if (this._answer[i] !== this._sequence[i]) {
         this._isOver = true;
         board.loseAnimation();
         return;
       }
-      if (this._answer.length == this._sequence.length) {
+      if (this._answer.length === this._sequence.length) {
         this._newRound();
       }
     }
@@ -40,7 +40,7 @@ export default class Game {
     return this._isOver;
   }
   _updateScore() {
-    document.getElementById('score').textContent = this._score < 10 ? '0' + this._score : this._score;
+    document.getElementById('score').textContent = this._score.toString().padStart(2, '0');
     this._score++;
   }
 }
