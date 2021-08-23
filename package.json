@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "start": "parcel serve --port 5000 --target development --open",
+    "start": "parcel serve --port 5000 --target development",
     "prebuild": "rimraf ./docs",
     "build": "parcel build --target githubPages",
     "prebuildAllTargets": "rimraf ./docs ./dist",
