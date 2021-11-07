@@ -9,7 +9,14 @@ const preCacheAll = async () => {
   await cache.addAll(manifest);
 };
 
-self.addEventListener('install', event => event.waitUntil(preCacheAll()));
+const deleteOldCaches = async () => {
+  const allCachesFromOrigin = await caches.keys();
+  return Promise.allSettled(
+    allCachesFromOrigin
+      .filter(name => name !== caheName && name.startsWith(cachePrefix))
+      .map(name => caches.delete(name))
+  );
+};
 
 const cachedWithNetworkFallback = async req => {
   const cache = await caches.open(caheName);
@@ -24,15 +31,6 @@ const cachedWithNetworkFallback = async req => {
   return res;
 };
 
-self.addEventListener('fetch', event => event.respondWith(cachedWithNetworkFallback(event.request)));
-
-const deleteOldCaches = async () => {
-  const allCachesFromOrigin = await caches.keys();
-  return Promise.allSettled(
-    allCachesFromOrigin
-      .filter(name => name !== caheName && name.startsWith(cachePrefix))
-      .map(name => caches.delete(name))
-  );
-};
-
+self.addEventListener('install', event => event.waitUntil(preCacheAll()));
 self.addEventListener('activate', event => event.waitUntil(deleteOldCaches()));
+self.addEventListener('fetch', event => event.respondWith(cachedWithNetworkFallback(event.request)));
