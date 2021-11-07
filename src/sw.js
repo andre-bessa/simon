@@ -1,7 +1,15 @@
+import { manifest, version } from '@parcel/service-worker';
+
 const repoName = 'simon';
-const cacheVersion = 'v0.1.0';
 const cachePrefix = `${repoName}-cache-`;
-const caheName = `${cachePrefix}${cacheVersion}`;
+const caheName = `${cachePrefix}${version}`;
+
+const preCacheAll = async () => {
+  const cache = await caches.open(caheName);
+  await cache.addAll(manifest);
+};
+
+self.addEventListener('install', event => event.waitUntil(preCacheAll()));
 
 const cachedWithNetworkFallback = async req => {
   const cache = await caches.open(caheName);
@@ -22,7 +30,7 @@ const deleteOldCaches = async () => {
   const allCachesFromOrigin = await caches.keys();
   return Promise.allSettled(
     allCachesFromOrigin
-      .filter(name => name.startsWith(cachePrefix))
+      .filter(name => name !== caheName && name.startsWith(cachePrefix))
       .map(name => caches.delete(name))
   );
 };

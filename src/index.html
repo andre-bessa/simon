@@ -36,7 +36,7 @@
   <script type="module" src="js/index.js"></script>
   <script type="module">
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(new URL('sw.js', import.meta.url));
+      navigator.serviceWorker.register(new URL('sw.js', import.meta.url), { type: 'module' });
     }
   </script>
 </body>
