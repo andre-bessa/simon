@@ -1,6 +1,7 @@
 /.parcel-cache/
 /dist/
 /public/
+/.lighthouseci/
 
 # Logs
 logs
