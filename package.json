@@ -9,20 +9,10 @@
     "not ie <= 11"
   ],
   "source": "./src/index.html",
-  "development": "./dist/index.html",
-  "githubPages": "./docs/index.html",
   "targets": {
-    "development": {
-      "publicUrl": "/",
-      "distDir": "./dist",
-      "context": "browser",
-      "isLibrary": false,
-      "sourceMap": true,
-      "optimize": false
-    },
     "githubPages": {
       "publicUrl": "/simon",
-      "distDir": "./docs",
+      "distDir": "./public/simon",
       "context": "browser",
       "isLibrary": false,
       "sourceMap": false,
@@ -30,12 +20,10 @@
     }
   },
   "scripts": {
-    "start": "parcel serve --port 5000 --target development",
-    "prebuild": "rimraf ./docs",
+    "start": "parcel serve --port 5000",
+    "prebuild": "rimraf ./public",
     "build": "parcel build --target githubPages",
-    "prebuildAllTargets": "rimraf ./docs ./dist",
-    "buildAllTargets": "parcel build",
-    "clean": "rimraf ./docs ./dist ./.parcel-cache",
+    "clean": "rimraf ./public ./dist ./.parcel-cache",
     "lint": "eslint ./src",
     "lintAndFix": "eslint --fix ./src"
   },
