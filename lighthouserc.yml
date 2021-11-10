@@ -1,0 +1,11 @@
+ci:
+  collect:
+    staticDistDir: ./public
+    url: http://localhost/simon/
+  assert:
+    preset: lighthouse:recommended
+    assertions:
+      csp-xss: warn
+      uses-passive-event-listeners: warn
+  upload:
+    target: temporary-public-storage
