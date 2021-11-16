@@ -1,45 +1,50 @@
 export default class Board {
-  constructor(g, r, y, b) {
-    this._greenBtn = g;
-    this._redBtn = r;
-    this._yellowBtn = y;
-    this._blueBtn = b;
-    this._isPlayingAnimation = false;
+  #greenBtn;
+  #redBtn;
+  #yellowBtn;
+  #blueBtn;
+  #isPlayingAnimation = false;
+  #idToButton = new Map();
 
-    this._idToButton = new Map();
-    this._idToButton.set(this._greenBtn.id, this._greenBtn);
-    this._idToButton.set(this._redBtn.id, this._redBtn);
-    this._idToButton.set(this._yellowBtn.id, this._yellowBtn);
-    this._idToButton.set(this._blueBtn.id, this._blueBtn);
+  constructor(g, r, y, b) {
+    this.#greenBtn = g;
+    this.#redBtn = r;
+    this.#yellowBtn = y;
+    this.#blueBtn = b;
+
+    this.#idToButton.set(this.#greenBtn.id, this.#greenBtn);
+    this.#idToButton.set(this.#redBtn.id, this.#redBtn);
+    this.#idToButton.set(this.#yellowBtn.id, this.#yellowBtn);
+    this.#idToButton.set(this.#blueBtn.id, this.#blueBtn);
   }
   playSequence(seq, interval) {
-    this._isPlayingAnimation = true;
+    this.#isPlayingAnimation = true;
     const interavlId = setInterval(() => {
       if (seq.length === 0) {
-        this._isPlayingAnimation = false;
+        this.#isPlayingAnimation = false;
         clearInterval(interavlId);
       } else {
-        this._idToButton.get(seq.shift()).play(interval);
+        this.#idToButton.get(seq.shift()).play(interval);
       }
     }, interval);
   }
   loseAnimation() {
-    this._playAllButtons(200);
+    this.#playAllButtons(200);
     setTimeout(() => {
-      this._playAllButtons(800);
+      this.#playAllButtons(800);
     }, 400);
   }
-  _playAllButtons(duration=300) {
-    this._isPlayingAnimation = true;
-    this._greenBtn.play(duration);
-    this._redBtn.play(duration);
-    this._yellowBtn.play(duration);
-    this._blueBtn.play(duration);
+  #playAllButtons(duration=300) {
+    this.#isPlayingAnimation = true;
+    this.#greenBtn.play(duration);
+    this.#redBtn.play(duration);
+    this.#yellowBtn.play(duration);
+    this.#blueBtn.play(duration);
     setTimeout( () => {
-      this._isPlayingAnimation = false;
+      this.#isPlayingAnimation = false;
     }, duration);
   }
   get isPlayingAnimation() {
-    return this._isPlayingAnimation;
+    return this.#isPlayingAnimation;
   }
 }
