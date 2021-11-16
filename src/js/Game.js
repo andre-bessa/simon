@@ -1,5 +1,4 @@
 import { board } from './index.js';
-import { audioCtx } from './audio.js';
 
 export default class Game {
   #isOver = true;
@@ -34,7 +33,6 @@ export default class Game {
     this.#answer = [];
     this.#score = 0;
     this.#newRound();
-    audioCtx.resume();
   }
   get isOver() {
     return this.#isOver;

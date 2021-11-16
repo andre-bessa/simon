@@ -1,4 +1,4 @@
-import { audioCtx, masterVolume } from './audio.js';
+import { playSound } from './audio.js';
 import { board } from './index.js';
 import { game } from './index.js';
 
@@ -8,31 +8,22 @@ export default class Button {
   #color;
   #lightColor;
   #shadowColor;
-  #tone;
-  #oscillator = audioCtx.createOscillator();
-  #volume = audioCtx.createGain();
+  #pitch;
+  #stopSound;
   #isPressed = false;
 
-  constructor(id, color, lightColor, shadowColor, tone) {
+  constructor(id, color, lightColor, shadowColor, pitch) {
     // Properties
     this.#id = id;
     this.#el = document.getElementById(id);
     this.#color = color;
     this.#lightColor = lightColor;
     this.#shadowColor = shadowColor;
-    this.#tone = tone;
+    this.#pitch = pitch;
 
     // Initial style
     this.#el.style.boxShadow = `0px 12px ${this.#shadowColor}`;
     this.#setNormalColor();
-
-    // Audio setup
-    this.#oscillator.type = 'square';
-    this.#oscillator.frequency.setValueAtTime(this.#tone, audioCtx.currentTime);
-    this.#oscillator.connect(this.#volume);
-    this.#volume.gain.setValueAtTime(0, audioCtx.currentTime);
-    this.#volume.connect(masterVolume);
-    this.#oscillator.start(audioCtx.currentTime);
 
     // Events
     this.#el.addEventListener('mousedown', e => {
@@ -103,10 +94,7 @@ export default class Button {
       `radial-gradient(160px at 200px 10px, ${this.#lightColor}, ${this.#color})`;
   }
   #playSound() {
-    this.#volume.gain.linearRampToValueAtTime(1, audioCtx.currentTime);
-  }
-  #stopSound() {
-    this.#volume.gain.setValueAtTime(0, audioCtx.currentTime);
+    this.#stopSound = playSound(this.#pitch);
   }
   get id() {
     return this.#id;

@@ -1,6 +1,7 @@
 import Button from './Button.js';
 import Board from './Board.js';
 import Game from './Game.js';
+import { initAudio } from './audio.js';
 
 const green        = 'hsl(150, 100%, 45%)',
       lightGreen   = 'hsl(150, 100%, 85%)',
@@ -24,6 +25,7 @@ export const board = new Board(
 
 export const game = new Game();
 document.getElementById('new-game-btn').addEventListener('click', () => {
+  initAudio();
   if (!board.isPlayingAnimation) {
     game.newGame.call(game);
   }
