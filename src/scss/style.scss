@@ -1,9 +1,10 @@
-:root {
-  --theme-color: #222222;
-  --background-color: #EEEEEE;
-  --icon-color: #78B159;
-  --icon-background-color: #66659F;
-}
+$theme-colors: (
+  "theme": hsl(0, 0%, 13%),
+  "background": hsl(0, 0%, 93%),
+  "icon": hsl(99, 36%, 52%),
+  "icon-background": hsl(241, 23%, 51%),
+  "pane-background": hsl(0, 0%, 60%),
+);
 
 * {
   box-sizing: border-box;
@@ -14,7 +15,7 @@
 body {
   font: 15px sans-serif;
   padding: 3px;
-  background-color: var(--background-color);
+  background-color: map-get($theme-colors, "background");
 }
 
 .container {
@@ -41,14 +42,18 @@ body {
   display: flex;
   justify-content: space-between;
   border-radius: 5px;
-  background: linear-gradient(45deg, var(--theme-color), #999999);
-  box-shadow: 0 5px var(--theme-color);
-}
+  background: linear-gradient(
+    45deg,
+    map-get($theme-colors, "theme"),
+    map-get($theme-colors, "pane-background")
+  );
+  box-shadow: 0 5px map-get($theme-colors, "theme");
 
-.pane p {
-  flex-grow: 1;
-  font-size: 28px;
-  color: var(--icon-color);
+  p {
+    flex-grow: 1;
+    font-size: 28px;
+    color: map-get($theme-colors, "icon");
+  }
 }
 
 #score {
@@ -60,10 +65,11 @@ body {
 
 .controls {
   flex-grow: 2;
-  color: var(--background-color);
+  color: map-get($theme-colors, "background");
 }
 
-input[type=range], button {
+input[type="range"],
+button {
   cursor: pointer;
   width: 100%;
 }
@@ -79,13 +85,16 @@ button {
     width: 200px;
     height: 200px;
   }
+
   .container {
     width: 426px;
     margin: 20px auto;
   }
+
   .row {
     margin-bottom: 26px;
   }
+
   button {
     height: 38px;
   }
