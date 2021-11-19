@@ -5,13 +5,13 @@ const mainVolumeControl = document.getElementById('volume');
 export const initAudio = () => {
   if (!audioCtx) {
     audioCtx = new AudioContext();
+    mainVolume = audioCtx.createGain();
+    mainVolume.connect(audioCtx.destination);
+    mainVolume.gain.value = mainVolumeControl.valueAsNumber;
+    mainVolumeControl.addEventListener('change', function() {
+      mainVolume.gain.setValueAtTime(this.valueAsNumber, audioCtx.currentTime);
+    });
   }
-  mainVolume = audioCtx.createGain();
-  mainVolume.connect(audioCtx.destination);
-  mainVolume.gain.value = mainVolumeControl.valueAsNumber;
-  mainVolumeControl.addEventListener('change', function() {
-    mainVolume.gain.setValueAtTime(this.valueAsNumber, audioCtx.currentTime);
-  });
 };
 
 export const playSound = pitch => {
