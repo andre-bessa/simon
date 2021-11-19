@@ -6,6 +6,13 @@ $theme-colors: (
   "pane-background": hsl(0, 0%, 60%),
 );
 
+$button-colors: (
+  "green": hsl(150, 100%, 45%),
+  "red": hsl(0, 100%, 45%),
+  "yellow": hsl(60, 100%, 45%),
+  "blue": hsl(225, 55%, 45%),
+);
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -35,6 +42,26 @@ body {
   margin-bottom: 12px; /* To compasate box shadow */
   cursor: pointer;
   -webkit-tap-highlight-color: hsla(0, 0%, 100%, 0);
+}
+
+@each $key, $val in $button-colors {
+  .btn-#{$key} {
+    background-image: radial-gradient(
+      160px at 200px 10px,
+      mix($val, white, 20%),
+      $val
+    );
+    box-shadow: 0 12px mix($val, black);
+  }
+
+  .btn-#{$key}-on {
+    background-image: radial-gradient(120px, mix($val, white, 20%), $val);
+  }
+
+  .btn-#{$key}-pressed {
+    box-shadow: 0 5px mix($val, black);
+    transform: translateY(7px);
+  }
 }
 
 .pane {
