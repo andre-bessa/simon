@@ -1,107 +1,57 @@
-import { audioCtx, masterVolume } from './audio.js';
-import { board } from './index.js';
-import { game } from './index.js';
+import { playSound } from './audio.js';
 
 export default class Button {
-  constructor(id, color, lightColor, shadowColor, tone) {
+  #el;
+  #isPressed = false;
+  #pitch;
+  #onClassName;
+  #pressedClassName;
+  #stopSound;
+
+  constructor(id, name, pitch) {
     // Properties
-    this._id = id;
-    this._el = document.getElementById(id);
-    this._color = color;
-    this._lightColor = lightColor;
-    this._shadowColor = shadowColor;
-    this._tone = tone;
-    this._oscillator = audioCtx.createOscillator();
-    this._volume = audioCtx.createGain();
-    this._isPressed = false;
-
-    // Initial style
-    this._el.style.boxShadow = `0px 12px ${this._shadowColor}`;
-    this._setNormalColor();
-
-    // Audio setup
-    this._oscillator.type = 'square';
-    this._oscillator.frequency.setValueAtTime(this._tone, audioCtx.currentTime);
-    this._oscillator.connect(this._volume);
-    this._volume.gain.setValueAtTime(0, audioCtx.currentTime);
-    this._volume.connect(masterVolume);
-    this._oscillator.start(audioCtx.currentTime);
+    this.#el = document.getElementById(id);
+    this.#pitch = pitch;
+    this.#onClassName = `btn-${name}-on`;
+    this.#pressedClassName = `btn-${name}-pressed`;
 
     // Events
-    this._el.addEventListener('mousedown', e => {
-      e.preventDefault();
-      this._press();
-    });
-    this._el.addEventListener('mouseleave', e => {
-      e.preventDefault();
-      if (this._isPressed) {
-        this._isPressed = false;
-        this._el.style.transform = 'initial';
-        this._el.style.boxShadow = `0px 12px ${this._shadowColor}`;
-        this._setNormalColor();
-        this._stopSound();
+    this.#el.addEventListener('pointerdown', this.#pressedHandler.bind(this));
+    this.#el.addEventListener('pointerup', this.#releasedHandler.bind(this));
+
+    this.#el.addEventListener('pointerleave', event => {
+      if (this.#isPressed) {
+        this.#releasedHandler(event);
         console.log('> Input Canceled');
       }
     });
-    this._el.addEventListener('mouseup', e => {
-      e.preventDefault();
-      this._release();
-    });
-    this._el.addEventListener('touchstart', e => {
-      e.preventDefault();
-      this._press();
-    });
-    this._el.addEventListener('touchend', e => {
-      e.preventDefault();
-      this._release();
-    });
   }
-  _press() {
-    if (!this._isPressed && !board.isPlayingAnimation) {
-      this._isPressed = true;
-      this._el.style.transform = 'translateY(7px)';
-      this._el.style.boxShadow = `0px 5px ${this._shadowColor}`;
-      if (!game.isOver && !board.isPlayingAnimation) {
-        this._setPressedColor();
-        this._playSound();
-      }
-    }
+
+  #playSound() {
+    this.#stopSound = playSound(this.#pitch);
   }
-  _release() {
-    if (this._isPressed) {
-      this._isPressed = false;
-      this._el.style.transform = 'initial';
-      this._el.style.boxShadow = `0px 12px ${this._shadowColor}`;
-      if (!game.isOver && !board.isPlayingAnimation) {
-        this._setNormalColor();
-        this._stopSound();
-        game.getAnswer(this._id);
-      }
-    }
+
+  on() {
+    this.#el.classList.add(this.#onClassName);
+    this.#playSound();
   }
-  play(duration) {
-    this._setPressedColor();
-    this._playSound();
-    setTimeout(() => {
-      this._setNormalColor();
-      this._stopSound();
-    }, duration * 2 / 3);
+
+  off() {
+    this.#el.classList.remove(this.#onClassName);
+    this.#stopSound();
   }
-  _setPressedColor() {
-    this._el.style.backgroundImage =
-      `radial-gradient(120px, ${this._lightColor}, ${this._color})`;
+
+  #pressedHandler(event) {
+    event.preventDefault();
+    this.#isPressed = true;
+    this.on();
+    event.target.classList.add(this.#pressedClassName);
   }
-  _setNormalColor() {
-    this._el.style.backgroundImage =
-      `radial-gradient(160px at 200px 10px, ${this._lightColor}, ${this._color})`;
-  }
-  _playSound() {
-    this._volume.gain.linearRampToValueAtTime(1, audioCtx.currentTime);
-  }
-  _stopSound() {
-    this._volume.gain.setValueAtTime(0, audioCtx.currentTime);
-  }
-  get id() {
-    return this._id;
+
+  #releasedHandler(event) {
+    event.preventDefault();
+    this.#isPressed = false;
+    this.off();
+    event.target.classList.remove(this.#pressedClassName);
   }
 }
