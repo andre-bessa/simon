@@ -1,49 +1,53 @@
+import Button from './Button.js';
+
 export default class Board {
-  #greenBtn;
-  #redBtn;
-  #yellowBtn;
-  #blueBtn;
+  #buttons = {
+    0: new Button(0, 'green', 440),
+    1: new Button(1, 'red', 329.628),
+    2: new Button(2, 'yellow', 261.626),
+    3: new Button(3, 'blue', 220)
+  };
   #isPlayingAnimation = false;
-  #idToButton = new Map();
 
-  constructor(g, r, y, b) {
-    this.#greenBtn = g;
-    this.#redBtn = r;
-    this.#yellowBtn = y;
-    this.#blueBtn = b;
-
-    this.#idToButton.set(this.#greenBtn.id, this.#greenBtn);
-    this.#idToButton.set(this.#redBtn.id, this.#redBtn);
-    this.#idToButton.set(this.#yellowBtn.id, this.#yellowBtn);
-    this.#idToButton.set(this.#blueBtn.id, this.#blueBtn);
+  #playButton(btnId, duration) {
+    this.#buttons[btnId].on();
+    setTimeout(() => this.#buttons[btnId].off(), duration);
   }
-  playSequence(seq, interval) {
+
+  #playAllButtons(duration) {
     this.#isPlayingAnimation = true;
-    const interavlId = setInterval(() => {
-      if (seq.length === 0) {
-        this.#isPlayingAnimation = false;
-        clearInterval(interavlId);
-      } else {
-        this.#idToButton.get(seq.shift()).play(interval);
-      }
-    }, interval);
-  }
-  loseAnimation() {
-    this.#playAllButtons(200);
+    for (const btnId in this.#buttons) {
+      this.#buttons[btnId].on();
+    }
+
     setTimeout(() => {
-      this.#playAllButtons(800);
-    }, 400);
-  }
-  #playAllButtons(duration=300) {
-    this.#isPlayingAnimation = true;
-    this.#greenBtn.play(duration);
-    this.#redBtn.play(duration);
-    this.#yellowBtn.play(duration);
-    this.#blueBtn.play(duration);
-    setTimeout( () => {
+      for (const btnId in this.#buttons) {
+        this.#buttons[btnId].off();
+      }
       this.#isPlayingAnimation = false;
     }, duration);
   }
+
+  playSequence(seq, speed) {
+    this.#isPlayingAnimation = true;
+
+    const playRecursive = (seq, idx) => {
+      if (idx === seq.length) {
+        this.#isPlayingAnimation = false;
+        return;
+      }
+      this.#playButton(seq[idx], speed - 100);
+      setTimeout(playRecursive, speed, seq, idx + 1);
+    };
+
+    setTimeout(playRecursive, speed, seq, 0);
+  }
+
+  loseAnimation(speed) {
+    this.#playAllButtons(speed / 2);
+    setTimeout(() => this.#playAllButtons(speed + 200), speed);
+  }
+
   get isPlayingAnimation() {
     return this.#isPlayingAnimation;
   }

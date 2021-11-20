@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,22 +14,25 @@
   <link rel="manifest" href="manifest.json">
   <title>Simon Says Game</title>
 </head>
+
 <body>
   <div class="container">
-    <div class="row">
-      <div id="0" class="btn btn-green"></div>
-      <div id="1" class="btn btn-red"></div>
-    </div>
-    <div class="row">
-      <div id="2" class="btn btn-yellow"></div>
-      <div id="3" class="btn btn-blue"></div>
+    <div id="board">
+      <div class="row">
+        <div id="0" class="btn btn-green"></div>
+        <div id="1" class="btn btn-red"></div>
+      </div>
+      <div class="row">
+        <div id="2" class="btn btn-yellow"></div>
+        <div id="3" class="btn btn-blue"></div>
+      </div>
     </div>
 
     <div class="pane">
       <p>Score<span id="score">00</span></p>
       <div class="controls">
-        <button id="new-game-btn">New Game</button><br/>
-        <label for="volume">Volume:</label><br/>
+        <button id="new-game-btn">New Game</button><br />
+        <label for="volume">Volume:</label><br />
         <input type="range" min="0" max="0.5" step="0.01" value="0.1" id="volume">
       </div>
     </div>
@@ -41,4 +45,5 @@
     }
   </script>
 </body>
+
 </html>

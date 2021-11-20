@@ -1,44 +1,85 @@
-import { board } from './index.js';
+import Board from './Board.js';
 
 export default class Game {
-  #isOver = true;
+  #board = new Board();
   #sequence = [];
-  #answer = [];
+  #currentSequenceIndex = 0;
+  #isOver = true;
   #score = 0;
-  #isPlayingAnimation = false;
+  #scoreElement = document.getElementById('score');
+  #speed = 400;
 
-  getAnswer(btnId) {
-    if (!this.#isOver && !this.#isPlayingAnimation) {
-      this.#answer.push(btnId);
-      const i = this.#answer.length - 1;
-      if (this.#answer[i] !== this.#sequence[i]) {
-        this.#isOver = true;
-        board.loseAnimation();
-        return;
+  constructor() {
+    const boardElement = document.getElementById('board');
+
+    const ignoreUserInputHandler = event => {
+      if (this.#isOver || this.#board.isPlayingAnimation) {
+        event.preventDefault();
+        event.stopPropagation();
       }
-      if (this.#answer.length === this.#sequence.length) {
-        this.#newRound();
+    };
+
+    boardElement.addEventListener('pointerdown', ignoreUserInputHandler, true);
+    boardElement.addEventListener('pointerleave', ignoreUserInputHandler, true);
+    boardElement.addEventListener('pointerup', ignoreUserInputHandler, true);
+
+    boardElement.addEventListener('pointerup', this.#answerHandler.bind(this));
+  }
+
+  #answerHandler(event) {
+    const id = parseInt(event.target.id);
+    if (this.#isValidId(id)) {
+      event.preventDefault();
+      if (this.#isRightAnswer(id)) {
+        if (this.#currentSequenceIndex >= this.#sequence.length)
+          this.#newRound();
+      } else {
+        this.#gameOver();
       }
     }
   }
+
+  #isValidId(btnId) {
+    return 0 <= btnId && btnId <= 3;
+  }
+
+  #isRightAnswer(btnId) {
+    return this.#sequence[this.#currentSequenceIndex++] === btnId;
+  }
+
+  #gameOver() {
+    this.#isOver = true;
+    this.#board.loseAnimation(this.#speed);
+  }
+
   #newRound() {
+    this.#currentSequenceIndex = 0;
     this.#updateScore();
-    this.#sequence.push(Math.floor(Math.random() * 4));
-    board.playSequence(this.#sequence.slice(), 500);
-    this.#answer = [];
+    this.#sequence.push(randomInt(0, 4));
+    this.#board.playSequence([...this.#sequence], this.#speed);
   }
+
   newGame() {
-    this.#isOver = false;
-    this.#sequence = [];
-    this.#answer = [];
-    this.#score = 0;
-    this.#newRound();
+    if (!this.#board.isPlayingAnimation) {
+      this.#isOver = false;
+      this.#sequence = [];
+      this.#score = 0;
+      this.#newRound();
+    }
   }
-  get isOver() {
-    return this.#isOver;
-  }
+
   #updateScore() {
-    document.getElementById('score').textContent = this.#score.toString().padStart(2, '0');
+    this.#scoreElement.textContent = this.#score.toString().padStart(2, '0');
     this.#score++;
   }
+}
+
+/**
+ * Generates a random integer.
+ * @param {number} min - Minimum integer (inclusive)
+ * @param {number} max - Maximum integer (exclusive)
+ * @returns {number} A random integer between min e max
+ */
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
 }
