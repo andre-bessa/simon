@@ -28,15 +28,15 @@
     "lintAndFix": "eslint --fix ./src"
   },
   "dependencies": {
-    "@parcel/service-worker": "^2.0.1"
+    "@parcel/service-worker": "^2.7.0"
   },
   "devDependencies": {
-    "@parcel/packager-raw-url": "^2.0.1",
-    "@parcel/transformer-image": "^2.0.1",
-    "@parcel/transformer-sass": "^2.0.1",
-    "@parcel/transformer-webmanifest": "^2.0.1",
-    "eslint": "^8.2.0",
-    "parcel": "^2.0.1",
+    "@parcel/packager-raw-url": "^2.7.0",
+    "@parcel/transformer-image": "^2.7.0",
+    "@parcel/transformer-sass": "^2.7.0",
+    "@parcel/transformer-webmanifest": "^2.7.0",
+    "eslint": "^8.21.0",
+    "parcel": "^2.7.0",
     "rimraf": "^3.0.2"
   }
 }
